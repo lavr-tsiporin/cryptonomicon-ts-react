@@ -6,6 +6,7 @@ Stack:
 * React
 * Typescript
 * RTK
+* RTK Query
 
 Other:
 * Eslint (air-bnb)
