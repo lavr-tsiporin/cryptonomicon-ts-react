@@ -1,12 +1,13 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { ICrypto } from "../../Models/ICrypto";
+import { LOCALSTORAGE_KEY } from "../../Constants";
 
 interface CryptoState {
   cryptos: ICrypto[];
 }
 
 const initialState: CryptoState = {
-  cryptos: [{ name: "DOGE" }],
+  cryptos: JSON.parse(<string>localStorage.getItem(LOCALSTORAGE_KEY)) || [],
 };
 
 export const cryptoSlice = createSlice({

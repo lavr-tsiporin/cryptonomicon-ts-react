@@ -9,7 +9,7 @@ export const CryptoItem: FC<ICrypto> = ({ name }) => {
   const { removeCrypto } = cryptoSlice.actions;
   const dispatch = useAppDispatch();
   const { data } = cryptoApi.useFetchPriceCryptoQuery(name, {
-    // pollingInterval: 10000,
+    pollingInterval: 10000,
   });
   return (
     <div className="bg-white overflow-hidden shadow rounded-lg border-purple-800 border-solid cursor-pointer">
@@ -18,7 +18,11 @@ export const CryptoItem: FC<ICrypto> = ({ name }) => {
           {name} - USD
         </dt>
         <dd className="mt-1 text-3xl font-semibold text-gray-900">
-          {data && data.USD}
+          {Number.isNaN(Number(data?.USD))
+            ? "-"
+            : data && Number(data.USD) > 1
+            ? Number(data.USD).toFixed(2)
+            : Number(data?.USD).toPrecision(2)}
         </dd>
       </div>
       <div className="w-full border-t border-gray-200" />

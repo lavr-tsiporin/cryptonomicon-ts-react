@@ -1,10 +1,16 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { CryptoItem } from "./Components/CryptoItem/CryptoItem";
 import { InputAddCrypto } from "./Components/InputAddCrypto/InputAddCrypto";
 import { useAppSelector } from "./hooks/redux";
+import { LOCALSTORAGE_KEY } from "./Constants";
 
 const App = () => {
   const { cryptos } = useAppSelector((state) => state.cryptoReducer);
+
+  useEffect(() => {
+    localStorage.setItem(LOCALSTORAGE_KEY, JSON.stringify(cryptos));
+  }, [cryptos]);
+
   return (
     <div className="container mx-auto flex flex-col items-center bg-gray-100 p-4">
       <div className="container">
