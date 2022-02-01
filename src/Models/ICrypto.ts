@@ -1,3 +1,3 @@
 export interface ICrypto {
-  name: string;
+  nameCrypto: string;
 }

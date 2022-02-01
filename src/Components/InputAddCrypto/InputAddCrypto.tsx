@@ -29,11 +29,11 @@ export const InputAddCrypto = () => {
   }, []);
 
   const handlerAddCrypto = (value: string) => {
-    if (cryptos.some((el: ICrypto) => value === el.name)) {
+    if (cryptos.some((el: ICrypto) => value === el.nameCrypto)) {
       setAlreadyAddTickers(true);
       return;
     }
-    dispatch(addCrypto({ name: value }));
+    dispatch(addCrypto({ nameCrypto: value }));
     setInputValue("");
   };
 
@@ -101,6 +101,7 @@ export const InputAddCrypto = () => {
         type="button"
         className="my-4 inline-flex items-center py-2 px-4 border border-transparent shadow-sm text-sm leading-4 font-medium rounded-full text-white bg-gray-600 hover:bg-gray-700 transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
         onClick={() => handlerAddCrypto(inputValue)}
+        disabled={inputValue.length < 1}
       >
         {/* <!-- Heroicon name: solid/mail --> */}
         <svg

@@ -1,34 +1,48 @@
 import React, { FC } from "react";
 import { ICrypto } from "../../Models/ICrypto";
 import { cryptoSlice } from "../../Store/Reducers/CryptoSlice";
-import { useAppDispatch } from "../../hooks/redux";
+import { useAppDispatch, useAppSelector } from "../../hooks/redux";
 import { cryptoApi } from "../../Service/CryptoService";
-// border-4
+import { activeCryptoAndGraphSlice } from "../../Store/Reducers/ActiveCryptoAndGraphSlice";
 
-export const CryptoItem: FC<ICrypto> = ({ name }) => {
+export const CryptoItem: FC<ICrypto> = ({ nameCrypto }) => {
   const { removeCrypto } = cryptoSlice.actions;
   const dispatch = useAppDispatch();
-  const { data } = cryptoApi.useFetchPriceCryptoQuery(name, {
-    pollingInterval: 10000,
+  const { data } = cryptoApi.useFetchPriceCryptoQuery(nameCrypto, {
+    // pollingInterval: 10000,
   });
+  const { setNameGraphAndActive, removeNameGraphAndActive } =
+    activeCryptoAndGraphSlice.actions;
+  const { nameGraph } = useAppSelector((state) => state.graphReducer);
+
   return (
-    <div className="bg-white overflow-hidden shadow rounded-lg border-purple-800 border-solid cursor-pointer">
+    // eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions
+    <div
+      className={`bg-white overflow-hidden shadow rounded-lg border-purple-800 border-solid cursor-pointer ${
+        nameGraph === nameCrypto ? "border-4" : ""
+      }`}
+      onClick={() =>
+        dispatch(setNameGraphAndActive({ nameGraph: nameCrypto, active: true }))
+      }
+    >
       <div className="px-4 py-5 sm:p-6 text-center">
         <dt className="text-sm font-medium text-gray-500 truncate">
-          {name} - USD
+          {nameCrypto} - USD
         </dt>
         <dd className="mt-1 text-3xl font-semibold text-gray-900">
-          {Number.isNaN(Number(data?.USD))
-            ? "-"
-            : data && Number(data.USD) > 1
-            ? Number(data.USD).toFixed(2)
-            : Number(data?.USD).toPrecision(2)}
+          {Number.isNaN(Number(data?.USD)) ? "-" : data?.USD}
         </dd>
       </div>
       <div className="w-full border-t border-gray-200" />
       <button
         className="flex items-center justify-center font-medium w-full bg-gray-100 px-4 py-4 sm:px-6 text-md text-gray-500 hover:text-gray-600 hover:bg-gray-200 hover:opacity-20 transition-all focus:outline-none"
-        onClick={() => dispatch(removeCrypto(name))}
+        onClick={(e) => {
+          e.stopPropagation();
+          dispatch(removeCrypto(nameCrypto));
+          if (nameCrypto === nameGraph) {
+            dispatch(removeNameGraphAndActive());
+          }
+        }}
       >
         <svg
           className="h-5 w-5"

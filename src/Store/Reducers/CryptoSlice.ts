@@ -19,7 +19,7 @@ export const cryptoSlice = createSlice({
     },
     removeCrypto(state, action: PayloadAction<string>) {
       state.cryptos.splice(
-        state.cryptos.findIndex((el) => el.name === action.payload),
+        state.cryptos.findIndex((el) => el.nameCrypto === action.payload),
         1
       );
     },
