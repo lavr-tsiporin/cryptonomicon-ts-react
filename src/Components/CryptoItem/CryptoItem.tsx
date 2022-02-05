@@ -9,7 +9,7 @@ export const CryptoItem: FC<ICrypto> = ({ nameCrypto }) => {
   const { removeCrypto } = cryptoSlice.actions;
   const dispatch = useAppDispatch();
   const { data } = cryptoApi.useFetchPriceCryptoQuery(nameCrypto, {
-    // pollingInterval: 10000,
+    pollingInterval: 10000,
   });
   const { setNameGraphAndActive, removeNameGraphAndActive } =
     activeCryptoAndGraphSlice.actions;
@@ -36,7 +36,7 @@ export const CryptoItem: FC<ICrypto> = ({ nameCrypto }) => {
       <div className="w-full border-t border-gray-200" />
       <button
         className="flex items-center justify-center font-medium w-full bg-gray-100 px-4 py-4 sm:px-6 text-md text-gray-500 hover:text-gray-600 hover:bg-gray-200 hover:opacity-20 transition-all focus:outline-none"
-        onClick={(e) => {
+        onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
           e.stopPropagation();
           dispatch(removeCrypto(nameCrypto));
           if (nameCrypto === nameGraph) {

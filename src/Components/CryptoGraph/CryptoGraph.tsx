@@ -9,7 +9,7 @@ export const CryptoGraph = () => {
   const dispatch = useAppDispatch();
   const { removeNameGraphAndActive } = activeCryptoAndGraphSlice.actions;
 
-  const normilizeGraph = (p: number[]): number[] => {
+  const normalizeGraph = (p: number[]): number[] => {
     const maxValue = Math.max(...p);
     const minValue = Math.min(...p);
     return p.map((price) => {
@@ -28,7 +28,7 @@ export const CryptoGraph = () => {
         {nameGraph} - USD
       </h3>
       <div className="flex items-end border-gray-600 border-b border-l h-64">
-        {normilizeGraph(prices).map((price, idx) => (
+        {normalizeGraph(prices).map((price, idx) => (
           <div
             // eslint-disable-next-line react/no-array-index-key
             key={`${price}_${idx}`}

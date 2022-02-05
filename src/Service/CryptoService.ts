@@ -1,4 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/dist/query/react";
+import { DISPLAY_DOT_AFTER_COMMA } from "../Constants";
 
 interface fetchPrice {
   USD: number | string;
@@ -6,8 +7,8 @@ interface fetchPrice {
 
 const formatPrice = (price: string | number): string => {
   return Number(price) > 1
-    ? Number(price).toFixed(4)
-    : Number(price).toPrecision(4);
+    ? Number(price).toFixed(DISPLAY_DOT_AFTER_COMMA)
+    : Number(price).toPrecision(DISPLAY_DOT_AFTER_COMMA);
 };
 
 export const cryptoApi = createApi({

@@ -35,6 +35,7 @@ export const InputAddCrypto = () => {
     }
     dispatch(addCrypto({ nameCrypto: value }));
     setInputValue("");
+    setAlreadyAddTickers(false);
   };
 
   const handlerAddCryptoWithKeyboard = (e: React.KeyboardEvent) => {
