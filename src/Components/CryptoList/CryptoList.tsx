@@ -58,7 +58,7 @@ export const CryptoList = () => {
     setNextPage(
       filteredCrypto.length > paginationState.page * DISPLAY_VIEW_ITEMS_FILTERS
     );
-  }, [paginationState.page]);
+  }, [paginationState.page, cryptos]);
 
   return (
     <>
